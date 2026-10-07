@@ -1,6 +1,5 @@
 import json
 import os
-import datetime
 from google import genai
 from google.genai import types
 import streamlit as st
@@ -73,7 +72,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# 3. API 키 불러오기
+# 3. API 키 불러오기 (데이터베이스 저장 기능 없음!)
 api_key = os.environ.get("GEMINI_API_KEY")
 if not api_key:
     if "GEMINI_API_KEY" in st.secrets:
@@ -83,37 +82,41 @@ if not api_key:
 
 # 4. 타이틀 영역
 st.title("🌙 AI 백운도사의 신통한 사주 풀이")
-st.caption("천기를 읽는 40년 명리학 고수, 당신의 운명과 은밀한 고민을 꿰뚫어 봅니다.")
+st.caption("천기를 읽는 40년 명리학 고수, 당신의 운명과 은밀한 고민을 꿰뚫어 봅니다. (※ 입력된 정보는 절대 저장되지 않습니다)")
 st.divider()
 
-# 5. 입력 폼 (사용자 정보 수집)
+# 5. 입력 폼 (사용자 정보 수집 - 달력 위젯 대신 드롭다운으로 교체)
 with st.form("saju_form"):
     col1, col2 = st.columns(2)
+    
     with col1:
         name = st.text_input("성함 (또는 닉네임)", placeholder="김철수")
         gender = st.radio("성별", ["남성", "여성"], horizontal=True)
-    with col2:
-        # 생년월일 범위를 1900년~2100년으로 확장
-        birth_date = st.date_input(
-            "생년월일",
-            min_value=datetime.date(1900, 1, 1),
-            max_value=datetime.date(2100, 12, 31),
-            value=datetime.date(1995, 1, 1) # 기본 세팅 날짜
-        )
         calendar_type = st.radio("양력/음력", ["양력", "음력"], horizontal=True)
 
-    birth_time = st.selectbox(
-        "태어난 시",
-        [
-            "모름 (태어난 시 모름)", "자시 (23:30~01:29)", "축시 (01:30~03:29)",
-            "인시 (03:30~05:29)", "묘시 (05:30~07:29)", "진시 (07:30~09:29)",
-            "사시 (09:30~11:29)", "오시 (11:30~13:29)", "미시 (13:30~15:29)",
-            "신시 (15:30~17:29)", "유시 (17:30~19:29)", "술시 (19:30~21:29)",
-            "해시 (21:30~23:29)",
-        ],
-    )
+    with col2:
+        st.markdown("<p style='font-size:14px; margin-bottom:5px; font-weight:600;'>생년월일</p>", unsafe_allow_html=True)
+        
+        # 1930년~2026년 드롭다운 (기본값 1995년)
+        col_y, col_m, col_d = st.columns(3)
+        with col_y:
+            b_year = st.selectbox("연도", list(range(1930, 2027)), index=65, label_visibility="collapsed")
+        with col_m:
+            b_month = st.selectbox("월", list(range(1, 13)), label_visibility="collapsed")
+        with col_d:
+            b_day = st.selectbox("일", list(range(1, 32)), label_visibility="collapsed")
 
-    # 고민 큼직한 텍스트 에어리어 하나로 통일
+        birth_time = st.selectbox(
+            "태어난 시",
+            [
+                "모름 (태어난 시 모름)", "자시 (23:30~01:29)", "축시 (01:30~03:29)",
+                "인시 (03:30~05:29)", "묘시 (05:30~07:29)", "진시 (07:30~09:29)",
+                "사시 (09:30~11:29)", "오시 (11:30~13:29)", "미시 (13:30~15:29)",
+                "신시 (15:30~17:29)", "유시 (17:30~19:29)", "술시 (19:30~21:29)",
+                "해시 (21:30~23:29)",
+            ],
+        )
+
     worry = st.text_area(
         "도사님께 털어놓을 당신의 깊은 고민",
         placeholder="예: 올해 하반기 이직운이 들어와 있나요? / 요즘 만나는 사람과 계속 가도 될까요? / 왜 이렇게 돈이 안 모이는지 답답합니다.",
@@ -157,7 +160,7 @@ if submit_button:
         with st.spinner("🔮 백운도사가 만세력을 펼치고 당신의 천기를 읽는 중입니다..."):
             user_info = f"""
             - 이름: {name} ({gender})
-            - 생년월일: {birth_date} ({calendar_type})
+            - 생년월일: {b_year}년 {b_month}월 {b_day}일 ({calendar_type})
             - 태어난 시: {birth_time}
             - 고민: {worry}
             """
@@ -212,7 +215,4 @@ if submit_button:
                 )
 
                 if st.button("💳 복채 1,900원 내고 남은 인생 대운 열람하기"):
-                    st.info("💡 (수익화 모듈 연결 예정) 토스페이먼츠/카카오페이 결제창이 뜰 예정입니다!")
-
-            except Exception as e:
-                st.error(f"점괘를 읽는 중 기운이 흩어졌습니다 (에러 발생): {e}")
+                    st.
