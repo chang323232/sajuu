@@ -10,65 +10,63 @@ st.set_page_config(
     page_title="AI 백운도사 - 신통한 운세", page_icon="🌙", layout="centered"
 )
 
-# 2. 여심/MZ 저격 신비로운 타로 감성 CSS
+# 2. 가독성 최고! 밝고 세련된 연보라/아이보리 타로 감성 CSS
 st.markdown(
     """
     <style>
-    /* 전체 배경: 신비로운 딥 퍼플 그라데이션 */
+    /* 전체 배경: 밝고 신비로운 톤 */
     .stApp {
-        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        background: linear-gradient(135deg, #f5f0fa, #fdfbf7);
     }
-    /* 기본 텍스트 색상 */
+    /* 기본 텍스트 색상: 깔끔한 검은색 */
     html, body, [class*="css"] {
-        color: #f0e6d2 !important;
+        color: #111111 !important;
     }
     h1, h2, h3, h4, p, span, label {
-        color: #f0e6d2 !important;
+        color: #111111 !important;
     }
     /* 입력폼 스타일 커스텀 */
     .stTextInput>div>div>input, .stSelectbox>div>div>div, .stTextArea>div>div>textarea, .stDateInput>div>div>input {
-        background-color: rgba(255, 255, 255, 0.05) !important;
-        color: #ffffff !important;
-        border: 1px solid rgba(212, 175, 55, 0.5) !important;
+        background-color: #ffffff !important;
+        color: #111111 !important;
+        border: 1px solid #dcd1e3 !important;
         border-radius: 8px;
     }
-    /* 복채 버튼: 금박 부적 감성 */
+    /* 복채 버튼: 고급스러운 딥 퍼플 */
     .stButton>button {
         width: 100%;
-        background: linear-gradient(90deg, #d4af37, #ffdf73, #d4af37);
-        color: #1a0b2e !important;
+        background: linear-gradient(90deg, #4b3e7c, #302b63);
+        color: #ffffff !important;
         font-size: 20px;
         font-weight: 900;
         border-radius: 12px;
         border: none;
         padding: 15px;
-        box-shadow: 0px 4px 15px rgba(212, 175, 55, 0.4);
+        box-shadow: 0px 4px 15px rgba(48, 43, 99, 0.2);
         transition: all 0.3s ease;
     }
     .stButton>button:hover {
         transform: scale(1.02);
-        box-shadow: 0px 6px 20px rgba(212, 175, 55, 0.6);
+        box-shadow: 0px 6px 20px rgba(48, 43, 99, 0.4);
     }
-    /* 결과 카드: 반투명 유리 스타일 */
+    /* 결과 카드: 깔끔한 화이트 */
     .result-card {
-        background: rgba(20, 15, 40, 0.6);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(212, 175, 55, 0.4);
+        background: #ffffff;
+        border: 1px solid #e2dce8;
         border-radius: 15px;
         padding: 25px;
         margin-top: 20px;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
     }
     .result-card h2, .result-card h4 {
-        color: #ffdf73 !important;
+        color: #111111 !important;
     }
     .result-card p, .result-card li {
-        color: #fdfbf7 !important;
+        color: #333333 !important;
         line-height: 1.6;
     }
     hr {
-        border-color: rgba(212, 175, 55, 0.3);
+        border-color: #e2dce8;
     }
     </style>
 """,
@@ -185,7 +183,7 @@ if submit_button:
                     f"""
                 <div class="result-card">
                     <h2>📜 {name} 님의 사주 점괘</h2>
-                    <p style="font-size: 20px; font-weight: bold; color: #ffdf73 !important;">"{data['summary']}"</p>
+                    <p style="font-size: 20px; font-weight: bold; color: #111111 !important;">"{data['summary']}"</p>
                     <hr>
                     <h4>☯️ 오행(五行) 기운 분석</h4>
                     <p>{data['five_elements']}</p>
@@ -201,7 +199,7 @@ if submit_button:
                     </ul>
                     <br>
                     <h4>💡 백운도사의 인생 처방전</h4>
-                    <p style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 8px;">{data['dosa_advice']}</p>
+                    <p style="background: rgba(0, 0, 0, 0.05); padding: 15px; border-radius: 8px; color: #111111 !important;">{data['dosa_advice']}</p>
                 </div>
                 """,
                     unsafe_allow_html=True,
