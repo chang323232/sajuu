@@ -215,4 +215,7 @@ if submit_button:
                 )
 
                 if st.button("💳 복채 1,900원 내고 남은 인생 대운 열람하기"):
-                    st.
+                    st.info("💡 (수익화 모듈 연결 예정) 토스페이먼츠/카카오페이 결제창이 뜰 예정입니다!")
+
+            except Exception as e:
+                st.error(f"점괘를 읽는 중 기운이 흩어졌습니다 (에러 발생): {e}")
